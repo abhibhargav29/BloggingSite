@@ -1,0 +1,18 @@
+DROP DATABASE IF EXISTS Blogs;
+
+CREATE DATABASE Blogs;
+USE Blogs;
+
+CREATE TABLE BlogPosts(
+    BlogId INT(4) PRIMARY KEY AUTO_INCREMENT,
+    BlogTitle VARCHAR(30) NOT NULL,
+    AuthorUserName VARCHAR(15) REFERENCES Users(UserName),
+    BlogText TEXT NOT NULL,
+    BlogDate DATETIME DEFAULT NOW()
+);
+
+CREATE TABLE Users(
+    UserName VARCHAR(15) UNIQUE NOT NULL,
+    RealName VARCHAR(20),
+    Password VARCHAR(10) NOT NULL
+)
