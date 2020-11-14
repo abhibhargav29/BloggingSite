@@ -4,9 +4,10 @@ from datetime import datetime
 import time
 import sys
 
-
+#Initialize app
 app = Flask(__name__)
 
+#Login page function
 @app.route("/", methods=["GET","POST"])
 def LogIn():
 
@@ -26,6 +27,7 @@ def LogIn():
 
     return render_template("LogIn.html")
 
+#New user function
 @app.route("/NewUser", methods=["GET","POST"])
 def Register():
 
@@ -45,6 +47,7 @@ def Register():
 
     return render_template("Register.html")
 
+#Main page function
 @app.route("/<string:user>", methods=["GET","POST"])
 def MainWindow(user):
     cur.execute("SELECT * FROM BlogPosts")
@@ -64,6 +67,7 @@ def MainWindow(user):
 
     return render_template(("Main.html"), allPosts=rows, userName=user)
 
+#Delete function
 @app.route("/delete/<string:user>/<int:id>")
 def deletePost(user,id):
     query = f"DELETE FROM BlogPosts WHERE BlogId={id} AND AuthorUserName='{user}'"
@@ -76,6 +80,7 @@ def deletePost(user,id):
     return redirect(f"/{user}")
 
 
+#Edit window
 @app.route("/edit/<string:user>/<int:id>", methods=["GET","POST"])
 def editPost(user,id):
     try:
@@ -101,6 +106,7 @@ def editPost(user,id):
     
     return render_template("Edit.html", postp=post, userName=user)
 
+#Driver code
 if __name__ == "__main__":
     try:
         con = mysql.connect(host="localhost", user="root", password="4647", database="blogs")
