@@ -24,7 +24,7 @@ This is the page of registering new user with name username and password. After 
 
 <ins>Main.html:</ins>
 This is the main page of our site that has all the posts as well as an option to make a new post for the user who is logged in. Each post can be deleted or edited by the user who
-created it.
+created it. The posts are displayed in the order they were posted, that is oldest to latest.
 
 <ins>Edit.html:</ins>
 This is the edit window where a user can edit the post title or content.
