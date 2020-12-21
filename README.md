@@ -17,19 +17,28 @@ This folder has html files that are actually out front end that interact with ou
 The variable interchange between code and front end is facilitated by GET and POST requests in flask's various functions.
 </p>
 
+<p align="justify">
 <ins>base.html:</ins>
 This is our base html template every other template basically inherits from this class. The base class has all the basic things like styling, initializing bootstrap, use of 
 containers, setting up enoding and stuff like that. It also has the navigation bar which will be displayed for every page.
+</p>
 
+<p align="justify">
 <ins>Login.html:</ins>
 This is the home page as well and opens up first, We can login by entering username and password or register as a new user and then log in.
 
+<p align="justify">
 <ins>Register.html:</ins>
 This is the page of registering new user with name username and password. After clicking on Register, the user will be saved and can then login.
+</p>
 
+<p align="justify">
 <ins>Main.html:</ins>
-This is the main page of our site that has all the posts as well as an option to make a new post for the user who is logged in. Each post can be deleted or edited by the user who
-created it. The posts are displayed in the order they were posted, that is oldest to latest.
+This is the main page of our site that has all the posts as well as an option to make a new post for the user who is logged in. Each post can be deleted or edited by the user 
+ who created it. The posts are displayed in the order they were posted, that is oldest to latest.
+</p>
 
+<p align="justify">
 <ins>Edit.html:</ins>
 This is the edit window where a user can edit the post title or content.
+</p>
