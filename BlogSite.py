@@ -55,10 +55,10 @@ CORS(app)
 
 #Initialize mysql
 mysql = MySQL(cursorclass = pymysql.cursors.DictCursor)
-app.config['MYSQL_DATABASE_USER'] = "root"
-app.config['MYSQL_DATABASE_PASSWORD'] = "4647"
-app.config['MYSQL_DATABASE_DB'] = "blogs"
-app.config['MYSQL_DATABASE_HOST'] = "localhost"
+app.config['MYSQL_DATABASE_USER'] = "mysqldbuser@blogging-site29-mysqldbserver"
+app.config['MYSQL_DATABASE_PASSWORD'] = "gROMSTARK29@"
+app.config['MYSQL_DATABASE_DB'] = "mysqldatabase919"
+app.config['MYSQL_DATABASE_HOST'] = "blogging-site29-mysqldbserver.mysql.database.azure.com"
 mysql.init_app(app)
 
 
@@ -124,7 +124,9 @@ def Register():
             con.commit()
             con.close()
             return redirect(f"/addFace/{username}")
-        except:
+        except Exception as e:
+            print(type(e))
+            print(e.args)
             return render_template("Register.html", flag="1")
 
     return render_template("Register.html", flag="0")
