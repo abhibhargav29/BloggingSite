@@ -1,0 +1,156 @@
+{% extends "Base.html" %} 
+
+{% block head %}
+    <title>Verify Face</title>
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <style> 
+        .loader {
+            border: 16px solid #D9D8D9;
+            border-radius: 50%;
+            border-top: 16px solid #000000;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+            -webkit-animation: spin 1s linear infinite; /* Safari */
+            animation: spin 1s linear infinite;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        video, canvas {
+        transform: scale(-1, 1); 
+        -webkit-transform: scale(-1, 1);
+        }
+        .UserVideo{
+            width: 45%;
+            float: left;
+        }
+        .UserPicture{
+            width: 43%;
+            float: right;
+        }
+        .UserButtons{
+            width: 10%;
+            float: left;
+        }
+    </style>
+{% endblock %}
+
+{% block navbar%}
+  <nav class="navbar navbar-dark">
+    <a class="navbar-brand" style="color: white;">Verify Face</a>
+    <a id="userID" class="navbar-brand" style="color: white; text-align: right;">{{ username }}</a>
+  </nav>
+{% endblock%}
+
+{% block body %}   
+    <div class="UserVideo" id="UserVid">
+        <video id="myVideo" width="480" height="480" autoplay></video><br>
+        <h4 style="text-align: left;">Camera</h4>
+    </div> 
+    
+    <div class="UserPicture" id="UserPic">
+        <canvas id="myPicture" width="480" height="480"></canvas>
+        <h4 style="text-align: left;">Capture</h4>
+    </div>
+    <br><br><br><br><br><br><br><br>
+
+    <div class="UserButtons">
+        <button id="click" class="btn btn-dark centre" style="margin: auto; display: block;">Capture</button><br>
+        <button id="finalSave" class="btn btn-success centre" style="margin: auto; display: block;">Check</button><br>
+        <button id="back" class="btn btn-dark centre" style="margin: auto; display: block;">Back</button>
+    </div>
+
+    <div class="loader" id="load" style="display: none;"></div>
+
+    <script>
+        let v = document.getElementById("myVideo");
+        
+        let b = document.getElementById("click");
+        let s = document.getElementById("finalSave");
+        let back = document.getElementById("back");
+        var load = document.getElementById("load");
+        
+        var user = document.getElementById("userID");
+        var flag = "0"
+
+        let imageCanvas = document.getElementById("myPicture");
+        let imageCtx = imageCanvas.getContext("2d");
+
+        //Add file blob to a form and post
+        function postFile(file) {
+            let formdata = new FormData();
+            formdata.append("image", file);
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/CheckFace/'+user.textContent, true);
+            xhr.onload = function () {
+                if (this.status == 200) {
+                    load.style.display = "none";
+                    alert("Successfully Verified Face")
+                    window.location.replace("/"+user.textContent);
+                }
+                else if (this.status == 201) {
+                    load.style.display = "none";
+                    alert("Face verification Failed!")
+                    window.location.replace("/");
+                }
+                else {
+                    load.style.display = "none";
+                    alert("Some error encountered")
+                    window.location.replace("/checkFace/"+user.textContent);
+                    console.error(xhr);
+                }
+            };
+            xhr.send(formdata);
+            load.style.display = "block";
+            v.pause()
+            b.disabled="true";
+            s.disabled="true";
+            back.disabled="true";
+        };
+
+        //Wrapper function that checks if canvas is empty
+        s.onclick = function() {
+            if(flag=="0")
+                alert("Please capture your image first");
+            else
+                imageCanvas.toBlob(postFile, 'image/jpg');
+        };
+
+        //Take a picture on click
+        b.onclick = function() {
+            imageCanvas.width = v.videoWidth;
+            imageCanvas.height = v.videoHeight;
+            flag = "1";
+
+            imageCtx.drawImage(v, 0, 0, v.videoWidth, v.videoHeight);
+        };
+
+        //Skip Button
+        back.onclick = function() {
+            window.location.replace("/");
+        }
+
+        window.onload = function () {
+            alert("Please verify your face");
+            navigator.mediaDevices.getUserMedia({video: {width: 480, height: 480}, audio: false})
+                .then(stream => {
+                    v.srcObject = stream;
+                })
+                .catch(err => {
+                    console.log('navigator.getUserMedia error: ', err)
+                });
+        };
+
+    </script>
+
+{% endblock %}

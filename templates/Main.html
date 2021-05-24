@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block head %} <title>Main</title> {% endblock %}
+
+{% block navbar%}
+  <nav class="navbar navbar-dark">
+    <a class="navbar-brand" style="color: white;">Fun Bogs</a>
+    <button style="color: white;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarsExample01">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/" style="color: white;">Log Out<span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+{% endblock%}
+
+{% block body %}
+    <main role="main">
+    <div class="jumbotron">
+        <div class="container">
+        <h1>New Post:</h1><br>
+        <form name="newPost" action="/{{userName}}" method="POST" onsubmit="return FormValidate()">
+            <div class="form-group">
+                <label for="Title" style="font-size: large;">Title:</label>
+                <input class="form-control" id="title" name="title" placeholder="Enter Title">
+            </div><br>
+            <div class="form-group">
+                <label for="content" style="font-size: large;">Text:</label>
+                <textarea class="form-control" id="content" name="content" rows="3" placeholder="Enter Main Text"></textarea>
+            </div><br>
+            <button type="submit" class="btn btn-primary mb-2">Post</button>
+        </form>
+        </div>
+    </div>
+    </main>
+    <hr><hr>
+
+    <h1>All Posts: </h1><br>
+    {% for p in allPosts %}
+    <b style="font-size: x-large;">
+        {{ p["BlogTitle"] }}
+    </b>
+    <br>
+
+    <p style="font-size: large; white-space: pre-wrap; text-align: justify;">{{ p["BlogText"] }}</p>
+    {% if userName == p["AuthorUserName"] %}
+    <a class="btn btn-danger btn-sm" style="font-size: small;" href='/delete/{{userName}}/{{p["BlogId"]}}'>Delete</a>
+    <a class="btn btn-primary btn-sm" style="font-size: small;" href='/edit/{{userName}}/{{p["BlogId"]}}'>Edit</a>
+    •
+    {% else %}
+    <button class="btn btn-danger btn-sm" style="font-size: small;" disabled="true">Delete</button>
+    <button class="btn btn-primary btn-sm" style="font-size: small;" disabled="true">Edit</button>
+    •
+    {% endif %}
+    <i>{{ "by "+p["AuthorUserName"] }}</i>
+    {{ " posted at" }}
+    {{ p["BlogDate"] }}
+    
+    <br>
+    <hr>
+    {% endfor %}
+
+    <script>
+      function FormValidate(){
+        var title= document.forms["newPost"]["title"];
+        var text = document.forms["newPost"]["content"];
+
+        if(title.value == ""){
+          alert("Title can't be empty");
+          return false;
+        }
+        if(title.value.length>=50){
+          alert("Title length is limited to 50 characters");
+          return false;
+        }
+        if(text.value.length <=10){
+          alert("At least write a blog with more than 10 characters");
+          return false;
+        }
+        return true
+      };
+    </script>
+
+{% endblock %}
+
+{% block mainfooter %}
+    <footer class="page-footer">
+        <div class="footer-copyright text-center py-3">Contact Us
+            <br>
+            <a href="https://github.com/abhibhargav29" style="color:white" target="_blank">Github</a>
+            •
+            <a href="https://www.facebook.com/abhi.bhargav.29/" style="color:white" target="_blank">Facebook</a>
+            •
+            <a href="https://www.linkedin.com/in/abhibhargav29-48196/" style="color:white" target="_blank">LinkedIn</a>
+        </div>
+    </footer>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block head %} <title>Welcome</title> {% endblock %}
+
+{% block navbar%}
+  <nav class="navbar navbar-dark">
+    <a class="navbar-brand" style="color: white;">Fun Blogs</a>
+    <a id="flag" style="color: darkslateblue;">{{ flag }}</a>
+  </nav>
+{% endblock%}
+
+{% block body %}
+<main role="main">
+    <div class="jumbotron">
+        <div class="container">
+        <h1>Register:</h1><br>
+        <form name="register" action="/NewUser" method="POST" onsubmit="return FormValidate()" autocomplete="off">
+            <div class="form-group">
+                <label for="user">UserName:</label>
+                <input class="form-control" id="user" name="user">
+            </div><br>
+            <div class="form-group">
+                <label for="pass">Password:</label>
+                <input class="form-control" id="pass" name="pass">
+            </div><br>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input class="form-control" id="name" name="name">
+            </div><br>
+            <button type="submit" class="btn btn-success mb-2">Register</button>
+            <a href="/" role="button" style="color: white;" aria-pressed="true" class="btn btn-dark mb-2">Log In</a>
+        </form>
+        </div>
+    </div>
+</main>
+
+<script>
+    function FormValidate(){
+            var n = document.forms["register"]["name"];
+            var u = document.forms["register"]["user"];
+            var p = document.forms["register"]["pass"];
+            
+            if(u.value==""){
+                alert("Please Enter Username");
+                return false;
+            }
+            if(u.value.length>15){
+                alert("Username must not be more than 15 characters long");
+                return false;
+            }
+            if(u.value.indexOf(' ')>=0){
+                alert("Username can not have spaces between words");
+                return false;
+            }
+            if(u.value.indexOf("'")>=0){
+                alert("Username can not have punctuation marks");
+            }
+            if(p.value==""){
+                alert("Please Enter Password");
+                return false;
+            }
+            if(p.value.length>10){
+                alert("Password must be less than 10 characters long");
+                return false;
+            }
+            if(p.value.indexOf(' ')>=0){
+                alert("Password can not have spaces between words");
+                return false;
+            }
+            if(p.value.indexOf("'")>=0){
+                alert("Password can not have punctuation marks");
+            }
+            if(n.value==""){
+                alert("Please Enter name");
+                return false;
+            }
+            if(n.value.length>20){
+                alert("Your Name must be less than 20 characters");
+                return false;
+            }
+            if(n.value.indexOf("'")>=0){
+                alert("Name can not have punctuation marks");
+            }
+            return true
+        };
+
+        window.onload = function(){
+            let f = document.getElementById("flag");
+
+            if(f.textContent=="1"){
+                alert("Username taken");
+            }
+        };
+</script>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block head %} 
+    <title>Welcome</title> 
+    <style>
+        .mine{
+            float: right;
+        }
+    </style>
+{% endblock %}
+
+{% block navbar%}
+  <nav class="navbar navbar-dark">
+    <a class="navbar-brand" style="color: white;">Fun Blogs</a>
+    <a id="flag" style="color: darkslateblue;">{{ flag }}</a>
+    <a id="OldUser" style="color: darkslateblue;">{{ username }}</a>
+  </nav>
+{% endblock%}
+
+{% block body %}
+<main role="main">
+    <div class="jumbotron">
+        <div class="container">
+        <h1>Log In:</h1><br>
+        <form name="login" action="/" method="POST" autocomplete="off" onsubmit="return FormValidate()">
+            <div class="form-group">
+                <label for="user">UserName:</label>
+                <input class="form-control" id="user" name="user">
+            </div><br>
+            <div class="form-group">
+                <label for="pass">Password:</label>
+                <input class="form-control" type="password" id="pass" name="pass">
+                <div class="mine"><input id="showhide" type="checkbox" style="align-content: flex-end;">Show Password</input></div>
+            </div><br>
+            <button type="submit" class="btn btn-success mb-2">Log In</button>
+            <a href="/NewUser" role="button" style="color: white;" aria-pressed="true" class="btn btn-dark mb-2">Register User</a>
+        </form>
+        </div>
+    </div>
+</main>
+
+<script>
+    var sh = document.getElementById("showhide");
+    
+    function FormValidate(){  
+        var u = document.forms["login"]["user"];
+        var p = document.forms["login"]["pass"];
+        if(u.value==""){
+            alert("Please Enter Username");
+            return false;
+        }
+        if(p.value==""){
+            alert("Please Enter Password");
+            return false;
+        }
+        return true
+    };
+
+    window.onload = function(){
+        var u = document.forms["login"]["user"];
+        let f = document.getElementById("flag");
+        let OldU = document.getElementById("OldUser");
+        
+        if(f.textContent=="1"){
+            alert("Wrong password");
+            u.value = OldU.textContent;
+        }
+        else if (f.textContent=="2"){
+            alert("Username does not exist");
+        }
+    };
+
+    sh.onclick = function(){
+        var p = document.getElementById("pass")
+        if(p.type == "password"){
+            p.type = "text"
+        }
+        else{
+            p.type = "password"
+        }
+    }
+
+</script>
+{% endblock %}
