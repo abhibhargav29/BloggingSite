@@ -55,10 +55,10 @@ CORS(app)
 
 #Initialize mysql
 mysql = MySQL(cursorclass = pymysql.cursors.DictCursor)
-app.config['MYSQL_DATABASE_USER'] = "mysqldbuser@blogging-site29-mysqldbserver"
-app.config['MYSQL_DATABASE_PASSWORD'] = "gROMSTARK29@"
-app.config['MYSQL_DATABASE_DB'] = "mysqldatabase919"
-app.config['MYSQL_DATABASE_HOST'] = "blogging-site29-mysqldbserver.mysql.database.azure.com"
+app.config['MYSQL_DATABASE_USER'] = "root"           #Replace with your username for local instance of mysql
+app.config['MYSQL_DATABASE_PASSWORD'] = "4647"       #Replace with your password for local instance of mysql
+app.config['MYSQL_DATABASE_DB'] = "blogs"
+app.config['MYSQL_DATABASE_HOST'] = "localhost"
 mysql.init_app(app)
 
 
