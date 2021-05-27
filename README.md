@@ -58,6 +58,6 @@ This is the edit window where a user can edit the post title or content.
 
 ## Final Web App
 <p align="justify">
-You can see the final app deployed on heroku here: https://blogging-site29.herokuapp.com/ , Try to view it in desktop view or on laptop screen as some pages are not optimized 
+You can see the final app deployed on heroku here: https://blogging-site29.herokuapp.com/, Try to view it in desktop view or on laptop screen as some pages are not optimized 
 for phone screen. The app is connected to the cloud database clearDb that is provided by heroku itself as an add-on service.
 </p>
