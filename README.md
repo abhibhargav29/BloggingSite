@@ -14,7 +14,7 @@ facial features.
 
 ## Templates
 <p align="justify">
-This folder has html files that are actually out front end that interact with our python code using jinja2 and flask. We use jinja2 syntax for using the variables from the code. 
+This folder has html files that are actually out front end that interact with our python code using flask. We use jinja2 syntax for using the variables from the code. 
 The variable interchange between code and front end is facilitated by GET and POST requests in flask's various functions.
 </p>
 
